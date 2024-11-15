@@ -33,6 +33,7 @@ plt.show()
 
 
 #creation of the matrix without matplot
+#components = ['A', 'B', 'C', 'D']
 #matrix = [[0] * len(components) for _ in range(len(components))]
 
 #for i in range (len(components)):
