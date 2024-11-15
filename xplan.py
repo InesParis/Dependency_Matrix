@@ -11,12 +11,12 @@ components = ['A', 'B', 'C', 'D']
 def generate_random_dependencies(components):
     dependencies = []
     for i in range(len(components)):
-        for j in range(i+1, len(components)):  # Ensures dependencies are one-way (i modifies j)
-            if random.choice([True, False]):  # Randomly decide if a dependency exists
+        for j in range(i+1, len(components)):  
+            if random.choice([True, False]):  
                 dependencies.append((components[i], components[j]))
     return dependencies
 
-# Initialize a square matrix with zeros. The size of the matrix is equal to the number of components.
+# Initialize a square matrix with zeros. 
 matrix = np.zeros((len(components), len(components)))
 
 # Generate random dependencies
@@ -32,6 +32,7 @@ for mod in modifications:
     matrix[mod_index[0], mod_index[1]] = 1
     
 outgoing_dependencies = np.sum(matrix, axis=1)
+
 # Create the heatmap plot
 plt.figure(figsize=(6, 6))
 plt.imshow(matrix, cmap='Blues', interpolation='nearest')
@@ -64,7 +65,6 @@ print("\nThe next simplest case involves a single dependency, where:")
 print("Changing component C requires changing component A as well.")
 print("Note that the dependencies are one-way: Changing component A does not require changing component C.")
 
-# Show the plot
 
 
 #line chart showing outgoing dependencies
@@ -82,6 +82,8 @@ plt.ylabel('Number of Outgoing Dependencies')
 plt.grid(True)
 plt.show()
 plt.show()
+
+#----------------------------------------------------------------------------------------------------------
 
 #basic selected components
 #components = ['A', 'B', 'C', 'D']
