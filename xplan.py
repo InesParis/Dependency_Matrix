@@ -65,22 +65,22 @@ print("Changing component C requires changing component A as well.")
 print("Note that the dependencies are one-way: Changing component A does not require changing component C.")
 
 # Show the plot
-plt.show()
 
 
-# Now, plot the line chart showing outgoing dependencies
+#line chart showing outgoing dependencies
 plt.figure(figsize=(8, 5))
 
 # Plot the number of outgoing dependencies for each component
 plt.plot(components, outgoing_dependencies, marker='o', color='tab:blue')
 
-# Add labels and title
+
 plt.title('Outgoing Dependencies per Component')
 plt.xlabel('Components')
 plt.ylabel('Number of Outgoing Dependencies')
 
-# Display the plot
+
 plt.grid(True)
+plt.show()
 plt.show()
 
 #basic selected components
