@@ -1,36 +1,102 @@
 import matplotlib.pyplot as plt 
 import numpy as np
+import random
+#basic selected components
+#components = ['A', 'B', 'C', 'D']
+
+#matrix = np.zeros((len(components), len(components)))
+
+#for i in range(len(components)):
+    #matrix[i,i]=1
+
+#modifications=[('A', 'B'), ('B', 'C'), ('C', 'D')]
+
+#for mod in modifications:
+    #mod_index=(components.index(mod[0]), components.index(mod[1]))
+    #matrix[mod_index[0], mod_index[1]]=1
+    
+#plt.figure(figsize=(6,6))
+#plt.imshow(matrix, cmap="Blues", interpolation='nearest')
+
+#plt.xticks(np.arange(len(components)), components)
+#plt.yticks(np.arange(len(components)), components)
+
+
+#plt.grid(False)
+
+#plt.colorbar(label="Dependency (1:Yes, 0:No)")
+
+#plt.title("Dependency Matrix Heatmap")
+#plt.xlabel("Dependent Component")
+#plt.ylabel("Modifying Component")
+
+#plt.show()
+
+
+
+
+#random components
+# Define a list of components
 components = ['A', 'B', 'C', 'D']
 
+# Function to generate random dependencies
+def generate_random_dependencies(components):
+    dependencies = []
+    for i in range(len(components)):
+        for j in range(i+1, len(components)):  # Ensures dependencies are one-way (i modifies j)
+            if random.choice([True, False]):  # Randomly decide if a dependency exists
+                dependencies.append((components[i], components[j]))
+    return dependencies
+
+# Initialize a square matrix with zeros. The size of the matrix is equal to the number of components.
 matrix = np.zeros((len(components), len(components)))
 
+# Generate random dependencies
+modifications = generate_random_dependencies(components)
+
+# Mark the diagonal elements (self-dependencies)
 for i in range(len(components)):
-    matrix[i,i]=1
+    matrix[i, i] = 1
 
-modifications=[('A', 'B'), ('B', 'C'), ('C', 'D')]
-
+# Update the matrix based on the generated dependencies
 for mod in modifications:
-    mod_index=(components.index(mod[0]), components.index(mod[1]))
-    matrix[mod_index[0], mod_index[1]]=1
-    
-plt.figure(figsize=(6,6))
-plt.imshow(matrix, cmap="Blues", interpolation='nearest')
+    mod_index = (components.index(mod[0]), components.index(mod[1]))
+    matrix[mod_index[0], mod_index[1]] = 1
 
+# Create the heatmap plot
+plt.figure(figsize=(6, 6))
+plt.imshow(matrix, cmap='Blues', interpolation='nearest')
+
+# Add labels for the rows and columns (the components)
 plt.xticks(np.arange(len(components)), components)
 plt.yticks(np.arange(len(components)), components)
 
-
+# Add gridlines for clarity
 plt.grid(False)
 
-plt.colorbar(label="Dependency (1:Yes, 0:No)")
+# Show colorbar to represent the values
+plt.colorbar(label="Dependency (1: Yes, 0: No)")
 
-plt.title("Dependency Matrix Heatmap")
-plt.xlabel("Dependent Component")
-plt.ylabel("Modifying Component")
+# Set title and labels
+plt.title('Dependency Matrix Heatmap')
+plt.xlabel('Dependent Component')
+plt.ylabel('Modifying Component')
 
+# Display the matrix description
+print("This is a randomly generated dependency matrix.")
+if modifications:
+    print("The following dependencies were randomly chosen:")
+    for dep in modifications:
+        print(f"  Changing {dep[0]} requires changing {dep[1]}.")
+else:
+    print("No dependencies were randomly generated.")
+
+print("\nThe next simplest case involves a single dependency, where:")
+print("Changing component C requires changing component A as well.")
+print("Note that the dependencies are one-way: Changing component A does not require changing component C.")
+
+# Show the plot
 plt.show()
-
-
 
 #creation of the matrix without matplot
 #components = ['A', 'B', 'C', 'D']
