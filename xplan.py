@@ -30,7 +30,8 @@ for i in range(len(components)):
 for mod in modifications:
     mod_index = (components.index(mod[0]), components.index(mod[1]))
     matrix[mod_index[0], mod_index[1]] = 1
-
+    
+outgoing_dependencies = np.sum(matrix, axis=1)
 # Create the heatmap plot
 plt.figure(figsize=(6, 6))
 plt.imshow(matrix, cmap='Blues', interpolation='nearest')
@@ -64,6 +65,22 @@ print("Changing component C requires changing component A as well.")
 print("Note that the dependencies are one-way: Changing component A does not require changing component C.")
 
 # Show the plot
+plt.show()
+
+
+# Now, plot the line chart showing outgoing dependencies
+plt.figure(figsize=(8, 5))
+
+# Plot the number of outgoing dependencies for each component
+plt.plot(components, outgoing_dependencies, marker='o', color='tab:blue')
+
+# Add labels and title
+plt.title('Outgoing Dependencies per Component')
+plt.xlabel('Components')
+plt.ylabel('Number of Outgoing Dependencies')
+
+# Display the plot
+plt.grid(True)
 plt.show()
 
 #basic selected components
