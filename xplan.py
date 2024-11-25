@@ -5,7 +5,7 @@ import random
 
 #random components
 # Define a list of components
-components = ['A', 'B', 'C', 'D']
+components = ['A', 'B', 'C', 'D','E', 'F', 'G', 'H', 'I', 'J']
 
 # Function to generate random dependencies
 def generate_random_dependencies(components):
