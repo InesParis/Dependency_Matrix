@@ -72,7 +72,7 @@ class TechnologyModel:
         plt.show()
 
 def main():
-    # Get user input for the number of components, gamma, and simulation steps
+    # Get student input for the number of components, gamma, and simulation steps
     n = int(input("Enter the number of components (n): "))
     gamma = float(input("Enter the value of gamma (difficulty of reducing costs): "))
     t_steps = int(input("Enter the number of innovation steps (t_steps): "))
