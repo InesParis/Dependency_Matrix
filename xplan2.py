@@ -26,13 +26,13 @@ class TechnologyModel:
         # Step 1: Pick a random component i
         i = random.randint(0, self.n - 1)
         
-        # Step 2: Find components that depend on i (i.e., Ai)
+        # Step 2: Find components 
         Ai = np.where(self.dsm[i, :] == 1)[0]
         
-        # Step 3: Propose new costs for components in Ai based on distribution
-        new_costs = np.random.rand(len(Ai)) ** self.gamma  # Cost follows c_i ∝ c^(gamma-1)
+        # Step 3: Propose new costs for components 
+        new_costs = np.random.rand(len(Ai)) ** self.gamma 
         
-        # Calculate current sum of costs for Ai
+        # Calculate current sum of costs 
         current_sum = np.sum(self.costs[Ai])
         
         # Calculate new sum of costs
