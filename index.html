@@ -6,7 +6,7 @@
     <title>Simulation</title>
 </head>
 <body>
-    <section>
+ <section>
         <h1>Enter the information:</h1>
         <form method="POST">
             <label for="n">Number of components:</label>
@@ -20,19 +20,22 @@
     
             <button type="submit">Submit</button>
         </form>
-    </section>
-<section>
+ </section>
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+ <section>
     <h2>Result of Design Structure Matrix (DSM) Heatmap:</h2>
-    {% if heatmap_url %}
+    {%if heatmap_url%}
         <img src="data:image/png;base64,{{ heatmap_url }}" alt="DSM Heatmap">
-    {% endif %}
-</section>
+    {%endif%}
+ </section>
 
-<section>
+ <section>
     <h2>Total Cost Evolution:</h2>
-    {% if cost_plot_url %}
+    {%if cost_plot_url%}
         <img src="data:image/png;base64,{{ cost_plot_url }}" alt="Total Cost Evolution Plot">
-    {% endif %}
-</section>
+    {%endif%}
+ </section>
 </body>
 </html>
