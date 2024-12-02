@@ -85,3 +85,8 @@ section img {
     color: red;
     text-align: center;
 }
+
+#dsm-heatmap {
+    width: 100%;  /* Makes it fill the width of the container */
+    height: 500px; /* You can adjust this to fit your layout */
+}
