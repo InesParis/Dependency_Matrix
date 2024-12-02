@@ -1,7 +1,6 @@
 class TechnologyModel {
-    constructor(n, gamma, t_steps, dsm_density = 0.2) {
+    constructor(n, t_steps, dsm_density = 0.2) {
         this.n = n;  // Number of components
-        this.gamma = gamma;  // Difficulty of reducing costs (exponent)
         this.t_steps = t_steps;  // Number of innovation steps
         this.dsm_density = dsm_density;  // Density of DSM (probability of interactions)
 
@@ -30,11 +29,11 @@ class TechnologyModel {
         let Ai = this.dsm[i].map((val, idx) => val === 1 ? idx : -1).filter(idx => idx !== -1);
 
         // Step 3: Propose new costs for components
-        let newCosts = Ai.map(() => Math.random() ** this.gamma);
+        let newCosts = Ai.map(() => Math.random());
 
         // Calculate current sum of costs
         let currentSum = Ai.reduce((sum, idx) => sum + this.costs[idx], 0);
-
+ 
         // Calculate new sum of costs
         let newSum = newCosts.reduce((sum, cost) => sum + cost, 0);
 
@@ -58,17 +57,15 @@ class TechnologyModel {
     }
 }
 
-
 document.getElementById("simulation-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
     // Get user inputs
     let n = parseInt(document.getElementById("n").value);
-    let gamma = parseFloat(document.getElementById("gamma").value);
     let t_steps = parseInt(document.getElementById("t_steps").value);
 
-    // Create the model
-    let model = new TechnologyModel(n, gamma, t_steps);
+    // Create the model without gamma
+    let model = new TechnologyModel(n, t_steps);
 
     // Run the simulation
     let costHistory = model.runSimulation();
@@ -101,15 +98,11 @@ document.getElementById("simulation-form").addEventListener("submit", function(e
     Plotly.newPlot('dsm-heatmap', [dsmData], dsmLayout);
 });
 
-
-
-
 document.getElementById("simulation-form").addEventListener("submit", function(event) {
     event.preventDefault(); 
     
     // Get user inputs
     const n = parseInt(document.getElementById("n").value); // Number of components
-    const gamma = parseFloat(document.getElementById("gamma").value); // Gamma value
     const t_steps = parseInt(document.getElementById("t_steps").value); // Number of steps
 
     // Generate a random Design Structure Matrix (DSM) based on n
@@ -119,7 +112,7 @@ document.getElementById("simulation-form").addEventListener("submit", function(e
     plotHeatmap(dsm);
     
     // Run simulation and log cost evolution (just a placeholder for now)
-    const costHistory = runSimulation(n, gamma, t_steps, dsm);
+    const costHistory = runSimulation(n, t_steps, dsm);
     console.log("Cost History: ", costHistory);
 });
 
@@ -159,7 +152,7 @@ function plotHeatmap(dsm) {
 }
 
 // Simulate the cost evolution (just a placeholder)
-function runSimulation(n, gamma, t_steps, dsm) {
+function runSimulation(n, t_steps, dsm) {
     // Dummy simulation logic for the demonstration
     let costHistory = [];
     let costs = Array(n).fill().map(() => Math.random()); // Random initial costs
