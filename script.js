@@ -34,7 +34,7 @@ class TechnologyModel {
 
         // Calculate current sum of costs
         let currentSum = Ai.reduce((sum, idx) => sum + this.costs[idx], 0);
-
+ 
         // Calculate new sum of costs
         let newSum = newCosts.reduce((sum, cost) => sum + cost, 0);
 

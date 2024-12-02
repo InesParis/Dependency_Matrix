@@ -14,13 +14,13 @@
         <h1>Enter the information:</h1>
         <form id="simulation-form">
             <label for="n">Number of components:</label>
-            <input type="number" name="n" id="n" placeholder="Ex: 12" min="1" required><br>
+            <input type="number" name="n" id="n" placeholder="Ex: 12" required><br>
     
-            <label for="dependencies">Number of dependencies (density):</label>
-            <input type="number" name="dependencies" id="dependencies" step="0.01" placeholder="Ex: 25" min="0"  required><br>
+            <label for="gamma">Difficulty of reducing costs:</label>
+            <input type="number" name="gamma" id="gamma" step="0.01" placeholder="Ex:25" required><br>
     
-            <label for="t_steps">Innovation steps (min 20000):</label>
-            <input type="number" name="t_steps" id="t_steps" placeholder="Ex: 20000"  required><br>
+            <label for="t_steps">Innovation steps:</label>
+            <input type="number" name="t_steps" id="t_steps" placeholder="Ex: 45" required><br>
     
             <button type="submit">Submit</button>
         </form>
@@ -40,4 +40,4 @@
   <script src="script.js"></script>
 
 </body>
-</html>
+</html> 
