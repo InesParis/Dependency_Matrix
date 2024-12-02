@@ -1,7 +1,7 @@
 class TechnologyModel {
-    constructor(n, gamma, t_steps, dsm_density = 0.2) {
+    constructor(n, dependencies, t_steps, dsm_density = 0.2) {
         this.n = n;  // Number of components
-        this.gamma = gamma;  // Difficulty of reducing costs (exponent)
+        this.dependencies = dependencies;  // Difficulty of reducing costs (exponent)
         this.t_steps = t_steps;  // Number of innovation steps
         this.dsm_density = dsm_density;  // Density of DSM (probability of interactions)
 
@@ -64,11 +64,11 @@ document.getElementById("simulation-form").addEventListener("submit", function(e
 
     // Get user inputs
     let n = parseInt(document.getElementById("n").value);
-    let gamma = parseFloat(document.getElementById("gamma").value);
+    let dependencies = parseFloat(document.getElementById("dependencies").value);
     let t_steps = parseInt(document.getElementById("t_steps").value);
 
     // Create the model
-    let model = new TechnologyModel(n, gamma, t_steps);
+    let model = new TechnologyModel(n, dependencies, t_steps);
 
     // Run the simulation
     let costHistory = model.runSimulation();
@@ -109,7 +109,7 @@ document.getElementById("simulation-form").addEventListener("submit", function(e
     
     // Get user inputs
     const n = parseInt(document.getElementById("n").value); // Number of components
-    const gamma = parseFloat(document.getElementById("gamma").value); // Gamma value
+    const dependencies = parseFloat(document.getElementById("dependencies").value); // Gamma value
     const t_steps = parseInt(document.getElementById("t_steps").value); // Number of steps
 
     // Generate a random Design Structure Matrix (DSM) based on n
