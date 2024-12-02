@@ -105,7 +105,7 @@ document.getElementById("simulation-form").addEventListener("submit", function(e
 
 
 document.getElementById("simulation-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent page refresh on form submission
+    event.preventDefault(); 
     
     // Get user inputs
     const n = parseInt(document.getElementById("n").value); // Number of components
