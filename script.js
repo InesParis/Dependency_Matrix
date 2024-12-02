@@ -1,14 +1,10 @@
 class TechnologyModel {
     constructor(n, gamma, t_steps, dsm_density = 0.2) {
-        this.n = n;  // Number of components
-        this.gamma = gamma;  // Difficulty of reducing costs (exponent)
-        this.t_steps = t_steps;  // Number of innovation steps
-        this.dsm_density = dsm_density;  // Density of DSM (probability of interactions)
-
-        // Initialize costs randomly between 0 and 1
+        this.n = n;
+        this.gamma = gamma;
+        this.t_steps = t_steps;
+        this.dsm_density = dsm_density;
         this.costs = Array.from({ length: n }, () => Math.random());
-
-        // Initialize Design Structure Matrix (DSM) with some density
         this.dsm = this.generateDSM();
     }
 
@@ -17,28 +13,17 @@ class TechnologyModel {
             Array.from({ length: this.n }, () => Math.random() < this.dsm_density ? 1 : 0)
         );
         for (let i = 0; i < this.n; i++) {
-            dsm[i][i] = 0;  // No self-dependence
+            dsm[i][i] = 0;
         }
         return dsm;
     }
 
     updateCosts() {
-        // Step 1: Pick a random component i
         let i = Math.floor(Math.random() * this.n);
-
-        // Step 2: Find components that depend on i
         let Ai = this.dsm[i].map((val, idx) => val === 1 ? idx : -1).filter(idx => idx !== -1);
-
-        // Step 3: Propose new costs for components
         let newCosts = Ai.map(() => Math.random() ** this.gamma);
-
-        // Calculate current sum of costs
         let currentSum = Ai.reduce((sum, idx) => sum + this.costs[idx], 0);
- 
-        // Calculate new sum of costs
         let newSum = newCosts.reduce((sum, cost) => sum + cost, 0);
-
-        // Step 4: Accept or reject based on the total cost
         if (newSum < currentSum) {
             Ai.forEach((idx, idx2) => {
                 this.costs[idx] = newCosts[idx2];
@@ -58,34 +43,42 @@ class TechnologyModel {
     }
 }
 
+function downsampleData(data, stepSize) {
+    let downsampled = [];
+    for (let i = 0; i < data.length; i += stepSize) {
+        downsampled.push(data[i]);
+    }
+    return downsampled;
+}
 
 document.getElementById("simulation-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    // Get user inputs
-    let n = parseInt(document.getElementById("n").value);
-    let gamma = parseFloat(document.getElementById("gamma").value);
-    let t_steps = parseInt(document.getElementById("t_steps").value);
+    const n = parseInt(document.getElementById("n").value);
+    const gamma = parseFloat(document.getElementById("gamma").value);
+    const t_steps = parseInt(document.getElementById("t_steps").value);
 
-    // Create the model
     let model = new TechnologyModel(n, gamma, t_steps);
-
-    // Run the simulation
     let costHistory = model.runSimulation();
+
+    // Downsample the cost history (e.g., every 100th step)
+    let downsampledCostHistory = downsampleData(costHistory, 100);
+    let downsampledX = Array.from({ length: downsampledCostHistory.length }, (_, i) => i * 100);
 
     // Plot Total Cost Evolution
     let costTrace = {
-        x: Array.from({ length: t_steps + 1 }, (_, i) => i),
-        y: costHistory,
+        x: downsampledX,
+        y: downsampledCostHistory,
         mode: 'lines',
         type: 'scatter'
     };
     let costLayout = {
         title: 'Total Cost Evolution Over Time',
-        xaxis: { title: 'Innovation Attempts' },
+        xaxis: { title: 'Innovation Attempts', type: 'log' }, // Logarithmic X-axis
         yaxis: { title: 'Total Cost of Technology' }
     };
     Plotly.newPlot('cost-evolution', [costTrace], costLayout);
+
 
     // Plot DSM Heatmap
     let dsmData = {
