@@ -1,7 +1,13 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+from flask import Flask, render_template, request
+import io
+import base64
 
+app = Flask(_name_)
+
+   
 class TechnologyModel:
     def __init__(self, n, gamma, t_steps, dsm_density=0.2):
         self.n = n  # Number of components
@@ -59,7 +65,13 @@ class TechnologyModel:
         plt.xlabel('Innovation Attempts')
         plt.ylabel('Total Cost of Technology')
         plt.title(f'Total Cost Evolution Over {self.t_steps} Innovation Attempts')
-        plt.show()
+       
+        img_io = io.BytesIO()
+        plt.savefig(img_io, format='png')
+        img_io.seek(0)
+        plot_url = base64.b64encode(img_io.getvalue()).decode()
+        plt.close()
+        return plot_url
 
     def plot_dsm_heatmap(self):
         """Plot a heatmap of the Design Structure Matrix (DSM) using Matplotlib"""
@@ -69,25 +81,39 @@ class TechnologyModel:
         plt.title("Design Structure Matrix (DSM) Heatmap")
         plt.xlabel('Component Index')
         plt.ylabel('Component Index')
-        plt.show()
+        
+        img_io = io.BytesIO()
+        plt.savefig(img_io, format='png')
+        img_io.seek(0)
+        heatmap_url = base64.b64encode(img_io.getvalue()).decode()
+        plt.close()
+        return heatmap_url
+       
 
-def main():
-    # Get student input for the number of components, gamma, and simulation steps
-    n = int(input("Enter the number of components (n): "))
-    gamma = float(input("Enter the value of gamma (difficulty of reducing costs): "))
-    t_steps = int(input("Enter the number of innovation steps (t_steps): "))
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        # Retrieve form data from user input
+        try: 
+           n = int(request.form['n'])
+           gamma = float(request.form['gamma'])
+           t_steps = int(request.form['t_steps'])
+        except ValueError:
+            return render_template ('index.html', error="Invalid input. Please enter numeric values.")
+        # Create model instance with user inputs
+        model = TechnologyModel(n, gamma, t_steps)
+        
+        # Run the simulation
+        cost_history = model.run_simulation()
+        
+        # Generate plots
+        cost_plot_url = model.plot_results(cost_history)
+        heatmap_url = model.plot_dsm_heatmap()
 
-    # Create the model with user-defined parameters
-    model = TechnologyModel(n, gamma, t_steps)
+        return render_template('index.html', cost_plot_url=cost_plot_url, heatmap_url=heatmap_url)
 
-    # Run the simulation
-    cost_history = model.run_simulation()
+    return render_template('index.html')
 
-    # Plot the results: total cost over time
-    model.plot_results(cost_history)
 
-    # Plot the DSM heatmap to visualize the dependencies
-    model.plot_dsm_heatmap()
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(debug=True)

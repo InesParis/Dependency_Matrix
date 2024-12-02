@@ -3,16 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Simulation</title>
 </head>
 <body>
+    <section>
+        <h1>Enter the information:</h1>
+        <form method="POST">
+            <label for="n">Number of components:</label>
+            <input type="text" name="n" placeholder="Ex: 12" required><br>
+    
+            <label for="gamma">Difficulty of reducing costs:</label>
+            <input type="text" name="gamma" placeholder="Ex: 0.25" required><br>
+    
+            <label for="t_steps">Innovation steps:</label>
+            <input type="text" name="t_steps" placeholder="Ex: 45" required><br>
+    
+            <button type="submit">Submit</button>
+        </form>
+    </section>
 <section>
-   <div>
-    Number of components
-   </div> 
-   <div>
-    Difficulty of reducing costs
-   </div>
+    <h2>Result of Design Structure Matrix (DSM) Heatmap:</h2>
+    {% if heatmap_url %}
+        <img src="data:image/png;base64,{{ heatmap_url }}" alt="DSM Heatmap">
+    {% endif %}
+</section>
+
+<section>
+    <h2>Total Cost Evolution:</h2>
+    {% if cost_plot_url %}
+        <img src="data:image/png;base64,{{ cost_plot_url }}" alt="Total Cost Evolution Plot">
+    {% endif %}
 </section>
 </body>
 </html>
