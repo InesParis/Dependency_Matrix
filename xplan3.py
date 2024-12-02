@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import PySimpleGUI as sg 
 
 class TechnologyModel:
     def __init__(self, n, gamma, t_steps, dsm_density=0.2):

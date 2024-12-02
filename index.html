@@ -3,39 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet">
+    <script type="module" src="https://cdn.pyscript.net/latest/pyscript.js"></script> <!-- Include PyScript -->
     <title>Simulation</title>
 </head>
 <body>
- <section>
+  <section class="container">
+    <section class="form-section">
         <h1>Enter the information:</h1>
-        <form method="POST">
+        <form id="simulation-form">
             <label for="n">Number of components:</label>
-            <input type="text" name="n" placeholder="Ex: 12" required><br>
+            <input type="text" name="n" id="n" placeholder="Ex: 12" required><br>
     
             <label for="gamma">Difficulty of reducing costs:</label>
-            <input type="text" name="gamma" placeholder="Ex: 0.25" required><br>
+            <input type="text" name="gamma" id="gamma" placeholder="Ex: 0.25" required><br>
     
             <label for="t_steps">Innovation steps:</label>
-            <input type="text" name="t_steps" placeholder="Ex: 45" required><br>
+            <input type="text" name="t_steps" id="t_steps" placeholder="Ex: 45" required><br>
     
             <button type="submit">Submit</button>
         </form>
- </section>
-    {% if error %}
-    <p style="color:red;">{{ error }}</p>
-    {% endif %}
- <section>
-    <h2>Result of Design Structure Matrix (DSM) Heatmap:</h2>
-    {%if heatmap_url%}
-        <img src="data:image/png;base64,{{ heatmap_url }}" alt="DSM Heatmap">
-    {%endif%}
- </section>
+    </section>
+  
+    <section class="result-section">
+        <h2>Result of Design Structure Matrix (DSM) Heatmap:</h2>
+        <div id="dsm-heatmap"></div> <!-- Display DSM Heatmap -->
+    </section>
 
- <section>
-    <h2>Total Cost Evolution:</h2>
-    {%if cost_plot_url%}
-        <img src="data:image/png;base64,{{ cost_plot_url }}" alt="Total Cost Evolution Plot">
-    {%endif%}
- </section>
+    <section class="result-section">
+        <h2>Total Cost Evolution:</h2>
+        <div id="cost-evolution"></div> <!-- Display Cost Evolution -->
+    </section>
+  </section>
+
+  <!-- PyScript to handle form submission and plot -->
+ 
 </body>
 </html>
